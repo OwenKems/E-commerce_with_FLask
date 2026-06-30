@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - Soko Garden</title>
+    <link href="../static/files/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../static/files/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
+
+        .confirmation-wrapper {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px;
+        }
+
+        .confirmation-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+            padding: 48px 40px;
+            max-width: 560px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Animated checkmark */
+        .check-circle {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #6a0dad, #9b30d9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            animation: popIn 0.5s ease;
+        }
+
+        .check-circle span {
+            font-size: 2.8rem;
+            color: #fff;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .confirmation-card h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .confirmation-card p.subtitle {
+            color: #888;
+            font-size: 0.97rem;
+            margin-bottom: 28px;
+        }
+
+        /* Order Info Box */
+        .order-info {
+            background: #f9f0ff;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+
+        .order-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #ede8f5;
+        }
+
+        .order-info-row:last-child { border-bottom: none; }
+
+        .order-info-row .label {
+            color: #888;
+            font-weight: 500;
+        }
+
+        .order-info-row .value {
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .order-info-row .value.purple { color: #6a0dad; }
+        .order-info-row .value.green { color: #28a745; }
+
+        /* Steps */
+        .delivery-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .delivery-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: #e0d5f5;
+            z-index: 0;
+        }
+
+        .delivery-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .step-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: #e0d5f5;
+        }
+
+        .step-icon.active {
+            background: linear-gradient(135deg, #6a0dad, #9b30d9);
+            box-shadow: 0 2px 10px rgba(106,13,173,0.3);
+        }
+
+        .delivery-step .step-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #888;
+            text-align: center;
+        }
+
+        .delivery-step .step-label.active { color: #6a0dad; }
+
+        /* Buttons */
+        .btn-home {
+            display: block;
+            background: #6a0dad;
+            color: #fff;
+            border-radius: 10px;
+            padding: 13px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: background 0.2s;
+        }
+
+        .btn-home:hover { background: #530a9e; color: #fff; }
+
+        .btn-orders {
+            display: block;
+            background: #f0f0ff;
+            color: #6a0dad;
+            border-radius: 10px;
+            padding: 13px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-orders:hover { background: #e0d5f5; color: #6a0dad; }
+
+        .promo-note {
+            margin-top: 20px;
+            font-size: 0.82rem;
+            color: #aaa;
+        }
+
+        .promo-note span {
+            color: #6a0dad;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="confirmation-wrapper">
+        <div class="confirmation-card">
+
+            <!-- Checkmark -->
+            <div class="check-circle">
+                <span>✓</span>
+            </div>
+
+            <h2>Order Confirmed! 🎉</h2>
+            <p class="subtitle">
+                Thank you {{ session['email'] if session['email'] else 'for your order' }}!
+                Your order has been placed successfully and is being processed.
+            </p>
+
+            <!-- Order Details -->
+            <div class="order-info">
+                <div class="order-info-row">
+                    <span class="label">Order Number</span>
+                    <span class="value purple">#ORD-{{ range(10000, 99999) | random }}</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="label">Payment Status</span>
+                    <span class="value green">✅ Confirmed</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="label">Delivery</span>
+                    <span class="value green">FREE Next-Day</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="label">Expected Delivery</span>
+                    <span class="value">Tomorrow by 6:00 PM</span>
+                </div>
+            </div>
+
+            <!-- Delivery Progress -->
+            <div class="delivery-steps">
+                <div class="delivery-step">
+                    <div class="step-icon active">📋</div>
+                    <span class="step-label active">Order<br>Placed</span>
+                </div>
+                <div class="delivery-step">
+                    <div class="step-icon">📦</div>
+                    <span class="step-label">Being<br>Packed</span>
+                </div>
+                <div class="delivery-step">
+                    <div class="step-icon">🚚</div>
+                    <span class="step-label">Out for<br>Delivery</span>
+                </div>
+                <div class="delivery-step">
+                    <div class="step-icon">🏠</div>
+                    <span class="step-label">Delivered</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <a href="/" class="btn-home">🛍️ Continue Shopping</a>
+            <a href="/" class="btn-orders">📦 View My Orders</a>
+
+            <p class="promo-note">
+                A confirmation will be sent to <span>{{ session['email'] if session['email'] else 'your email' }}</span>
+            </p>
+
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

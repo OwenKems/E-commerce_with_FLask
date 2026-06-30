@@ -1,0 +1,225 @@
+<!--Main page-->
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home - Soko Garden</title>
+        <link href="../static/files/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/files/css/lightslider.css">
+        <link rel="stylesheet" href="../static/files/css/style.css">
+        <script src="../static/files/js/bootstrap.bundle.min.js"></script>
+        <script src="../static/files/js/jquery.js"></script>
+        <script src="../static/files/js/lightslider.js"></script>
+        <script src="../static/files/js/script.js"></script>
+
+        <style>
+            .section-heading {
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: #6a0dad;
+                padding-left: 16px;
+                border-left: 4px solid #f0c040;
+                margin-bottom: 12px;
+                margin-top: 8px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            {% include 'navbar.html' %}
+            <br>
+            {% include 'carousel.html' %}
+            <br>
+
+            <!-- CLOTHES -->
+            {% if myclothes %}
+            <h5 class="section-heading">👕 Clothes</h5>
+            <section class="slider p-4">
+                <ul class="cs-hidden autoWidth">
+                    {% for clothe in myclothes %}
+                    <li>
+                        <div class="box">
+                            <div class="slide-img">
+                                <img src="{{ url_for('static', filename='files/images/' + clothe[5]) }}" width="50" height="50">
+                                <div class="overlay">
+                                    <a href="/single/{{ clothe[0] }}" class="buy-btn">Buy Now</a>
+                                </div>
+                            </div>
+                            <div class="detail-box">
+                                {{ clothe[1] }}<br>
+                                <b class="text-warning">KES {{ clothe[3] | round(2) }}</b>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <br>
+            {% endif %}
+
+            <!-- SMARTPHONES -->
+            {% if mysmartphones %}
+            <h5 class="section-heading">📱 Smartphones</h5>
+            <section class="slider p-4">
+                <ul class="cs-hidden autoWidth">
+                    {% for phone in mysmartphones %}
+                    <li>
+                        <div class="box">
+                            <div class="slide-img">
+                                <img src="{{ url_for('static', filename='files/images/' + phone[5]) }}" width="50" height="50">
+                                <div class="overlay">
+                                    <a href="/single/{{ phone[0] }}" class="buy-btn">Buy Now</a>
+                                </div>
+                            </div>
+                            <div class="detail-box">
+                                {{ phone[1] }}<br>
+                                <b class="text-warning">KES {{ phone[3] | round(2) }}</b>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <br>
+            {% endif %}
+
+            <!-- ELECTRONICS -->
+            {% if myelectronics %}
+            <h5 class="section-heading">💻 Electronics</h5>
+            <section class="slider p-4">
+                <ul class="cs-hidden autoWidth">
+                    {% for item in myelectronics %}
+                    <li>
+                        <div class="box">
+                            <div class="slide-img">
+                                <img src="{{ url_for('static', filename='files/images/' + item[5]) }}" width="50" height="50">
+                                <div class="overlay">
+                                    <a href="/single/{{ item[0] }}" class="buy-btn">Buy Now</a>
+                                </div>
+                            </div>
+                            <div class="detail-box">
+                                {{ item[1] }}<br>
+                                <b class="text-warning">KES {{ item[3] | round(2) }}</b>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <br>
+            {% endif %}
+
+            <!-- BAGS -->
+            {% if mybags %}
+            <h5 class="section-heading">👜 Bags</h5>
+            <section class="slider p-4">
+                <ul class="cs-hidden autoWidth">
+                    {% for bag in mybags %}
+                    <li>
+                        <div class="box">
+                            <div class="slide-img">
+                                <img src="{{ url_for('static', filename='files/images/' + bag[5]) }}" width="50" height="50">
+                                <div class="overlay">
+                                    <a href="/single/{{ bag[0] }}" class="buy-btn">Buy Now</a>
+                                </div>
+                            </div>
+                            <div class="detail-box">
+                                {{ bag[1] }}<br>
+                                <b class="text-warning">KES {{ bag[3] | round(2) }}</b>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <br>
+            {% endif %}
+
+            <!-- DETERGENTS -->
+            {% if mydetergents %}
+            <h5 class="section-heading">🧴 Detergents</h5>
+            <section class="slider p-4">
+                <ul class="cs-hidden autoWidth">
+                    {% for detergent in mydetergents %}
+                    <li>
+                        <div class="box">
+                            <div class="slide-img">
+                                <img src="{{ url_for('static', filename='files/images/' + detergent[5]) }}" width="50" height="50">
+                                <div class="overlay">
+                                    <a href="/single/{{ detergent[0] }}" class="buy-btn">Buy Now</a>
+                                </div>
+                            </div>
+                            <div class="detail-box">
+                                {{ detergent[1] }}<br>
+                                <b class="text-warning">KES {{ detergent[3] | round(2) }}</b>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <br>
+            {% endif %}
+
+            <!-- GROCERIES -->
+            {% if mygroceries %}
+            <h5 class="section-heading">🛒 Groceries</h5>
+            <section class="slider p-4">
+                <ul class="cs-hidden autoWidth">
+                    {% for grocery in mygroceries %}
+                    <li>
+                        <div class="box">
+                            <div class="slide-img">
+                                <img src="{{ url_for('static', filename='files/images/' + grocery[5]) }}" width="50" height="50">
+                                <div class="overlay">
+                                    <a href="/single/{{ grocery[0] }}" class="buy-btn">Buy Now</a>
+                                </div>
+                            </div>
+                            <div class="detail-box">
+                                {{ grocery[1] }}<br>
+                                <b class="text-warning">KES {{ grocery[3] | round(2) }}</b>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <br>
+            {% endif %}
+
+            <!-- HOME -->
+            {% if myhome %}
+            <h5 class="section-heading">🏠 Home</h5>
+            <section class="slider p-4">
+                <ul class="cs-hidden autoWidth">
+                    {% for home in myhome %}
+                    <li>
+                        <div class="box">
+                            <div class="slide-img">
+                                <img src="{{ url_for('static', filename='files/images/' + home[5]) }}" width="50" height="50">
+                                <div class="overlay">
+                                    <a href="/single/{{ home[0] }}" class="buy-btn">Buy Now</a>
+                                </div>
+                            </div>
+                            <div class="detail-box">
+                                {{ home[1] }}<br>
+                                <b class="text-warning">KES {{ home[3] | round(2) }}</b>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <br>
+            {% endif %}
+
+        </div>
+        <br><br><br><br>
+        {% include 'footer.html' %}
+    </body>
+
+</html>

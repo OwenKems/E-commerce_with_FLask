@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignIn</title>
+    <link rel="stylesheet" href="../static/files/css/bootstrap.min.css">
+    <script src="../static/files/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .body {
+            background-color: #000608;
+        }
+
+        .signin-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px;
+        }
+
+        .signin-card {
+            background: #181139;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            padding: 40px 36px;
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .signin-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .signin-card p.subtitle {
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-family: Arial, sans-serif;
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: #09ffff;
+            margin-bottom: 4px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1.5px solid #ddd;
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: #6a0dad;
+            box-shadow: 0 0 0 3px rgba(106,13,173,0.10);
+        }
+
+        .btn-signin {
+            background-color: #6a0dad;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 11px;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-signin:hover {
+            background-color: #91899a;
+            color: #fff;
+        }
+
+        .alert-box {
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.92rem;
+            color: #fc139f;
+        }
+
+        .signup-link a {
+            color: #6a0dad;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .forgot-link {
+            text-align: right;
+            font-size: 0.85rem;
+            margin-top: -8px;
+            margin-bottom: 12px;
+            
+        }
+
+        .forgot-link a {
+            color: #0af5e9;
+            text-decoration: none;
+        }
+
+        .forgot-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="body">
+    {% include 'navbar.html' %}
+
+    <section class="signin-section">
+        <div class="signin-card">
+            <h3>Welcome Back!</h3>
+            <p class="subtitle">Sign in to continue shopping with us.</p>
+
+            <!-- Success Message -->
+            {% if success %}
+            <div class="alert-box" style="background:#d4edda; color:#155724;">
+                ✅ {{ success }}
+            </div>
+            {% endif %}
+
+            <!-- Error Message -->
+            {% if error %}
+            <div class="alert-box" style="background:#f8d7da; color:#721c24;">
+                ⚠️ {{ error }}
+            </div>
+            {% endif %}
+
+            <!-- General Message -->
+            {% if message %}
+            <div class="alert-box" style="background:#fff3cd; color:#856404;">
+                ℹ️ {{ message }}
+            </div>
+            {% endif %}
+
+            <form action="/signin" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input style="border-radius: 40px; background-color: #181139; border: 1px solid #555; color: #fff;"  type="email" name="email" placeholder="e.g. john@email.com" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input style="border-radius: 40px; background-color: #181139; border: 1px solid #555; color: #fff;" type="password" name="password" placeholder="Enter your password" class="form-control" required>
+                </div>
+
+                <div class="forgot-link">
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-signin">Sign In</button>
+            </form>
+
+            <div class="signup-link">
+                Don't have an account? <a href="/signup">Sign up</a>
+            </div>
+        </div>
+    </section>
+
+    {% include 'footer.html' %}
+</body>
+</html>

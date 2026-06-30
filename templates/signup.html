@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link rel="stylesheet" href="../static/files/css/bootstrap.min.css">
+    <script src="../static/files/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f0f2f5;
+        }
+
+        .signup-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px;
+        }
+
+        .signup-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            padding: 40px 36px;
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .signup-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #6a0dad;
+            margin-bottom: 6px;
+        }
+
+        .signup-card p.subtitle {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: #444;
+            margin-bottom: 4px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1.5px solid #ddd;
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: #6a0dad;
+            box-shadow: 0 0 0 3px rgba(106,13,173,0.10);
+        }
+
+        .btn-signup {
+            background-color: #6a0dad;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 11px;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-signup:hover {
+            background-color: #530a9e;
+            color: #fff;
+        }
+
+        .alert-box {
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .signin-link {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.92rem;
+            color: #666;
+        }
+
+        .signin-link a {
+            color: #6a0dad;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .signin-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <section class="signup-section">
+        <div class="signup-card">
+            <h3>Create an Account</h3>
+            <p class="subtitle">Sign up to start shopping with us today.</p>
+
+            <!-- Success Message -->
+            {% if success %}
+            <div class="alert-box" style="background:#d4edda; color:#155724;">
+                ✅ {{ success }}
+            </div>
+            {% endif %}
+
+            <!-- Error Message -->
+            {% if error %}
+            <div class="alert-box" style="background:#f8d7da; color:#721c24;">
+                ⚠️ {{ error }}
+            </div>
+            {% endif %}
+
+            <!-- General Message -->
+            {% if message %}
+            <div class="alert-box" style="background:#fff3cd; color:#856404;">
+                ℹ️ {{ message }}
+            </div>
+            {% endif %}
+
+            <form action="/signup" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="username" placeholder="e.g. john_doe" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" placeholder="e.g. john@email.com" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" name="phone" placeholder="+254700000000" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" placeholder="Min. 8 characters" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" name="confirm_password" placeholder="Repeat your password" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn-signup">Create Account</button>
+            </form>
+
+            <div class="signin-link">
+                Already have an account? <a href="/signin">Sign in</a>
+            </div>
+        </div>
+    </section>
+
+    {% include 'footer.html' %}
+</body>
+</html>

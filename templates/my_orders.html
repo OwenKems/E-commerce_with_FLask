@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+<div class="container mt-4">
+    <h4>My Orders</h4>
+
+    {% if orders %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Product</th>
+                <th>Amount</th>
+                <th>Payment</th>
+                <th>Delivery Address</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for o in orders %}
+            <tr>
+                <td>#{{ o[0] }}</td>
+                <td>{{ o[2] }}</td>
+                <td>KES {{ o[4] }}</td>
+                <td>{{ o[12] }}</td>
+                <td>{{ o[9] }}, {{ o[10] }}</td>
+                <td>
+                    <span class="badge 
+                        {% if o[13] == 'Delivered' %}bg-success
+                        {% elif o[13] == 'Cancelled' %}bg-danger
+                        {% elif o[13] == 'Shipped' %}bg-info
+                        {% else %}bg-warning text-dark{% endif %}">
+                        {{ o[13] }}
+                    </span>
+                </td>
+                <td>{{ o[14] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You have no orders yet. <a href="/">Start shopping</a></p>
+    {% endif %}
+</div>
+
+{% include 'footer.html' %}
+</body>
+</html>

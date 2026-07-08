@@ -1,0 +1,55 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg p-3" style="background-color: #6a0dad;">
+    <div class="container-fluid">
+
+        <!-- Brand Logo -->
+        <a href="/" class="navbar-brand d-flex align-items-center gap-2">
+            <img src="{{ url_for('static', filename='files/images/soko.png') }}" alt="Soko Garden Logo" height="50" width="100" style="border-radius:8px;">
+            <span style="color:#fff; font-size:1.3rem; font-weight:700;">Soko <span style="color:#f0c040;">Garden</span></span>
+        </a>
+
+        <!-- Mobile Toggle Button -->
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" style="border-color:#fff;">
+            <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+        </button>
+
+        <!-- Nav Links -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav me-auto">
+                <a href="/" class="nav-item nav-link text-white">Home</a>
+                <a href="{{ url_for('blog') }}" class="nav-item nav-link text-white">Blog</a>
+                <a href="{{ url_for('about') }}" class="nav-item nav-link text-white">About Us</a>
+            </div>
+
+            <!-- Right Side: Auth Links -->
+            <div class="d-flex align-items-center gap-3">
+                {% if session['email'] %}
+                    <!-- Logged in: show cart, email and logout -->
+                    <a href="/cart"
+                       style="color:#f0c040; font-weight:600; text-decoration:none;">
+                        🛒 Cart
+                    </a>
+                    <span style="color:#f0c040; font-weight:600;">
+                        👤 {{ session['email'] }}
+                    </span>
+                    <!-- ✅ Logout button restored -->
+                    <a href="{{ url_for('logout') }}"
+                       style="background:#fff; color:#6a0dad; border-radius:8px; padding:6px 16px; font-weight:600; text-decoration:none;">
+                        Logout
+                    </a>
+                {% else %}
+                    <!-- Not logged in: show sign in and sign up -->
+                    <a href="{{ url_for('signin') }}"
+                       style="color:#fff; font-weight:600; text-decoration:none;">
+                        Sign In
+                    </a>
+                    <a href="{{ url_for('signup') }}"
+                       style="background:#f0c040; color:#6a0dad; border-radius:8px; padding:6px 16px; font-weight:600; text-decoration:none;">
+                        Sign Up
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</nav>

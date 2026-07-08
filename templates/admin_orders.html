@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Orders</title>
+    <link href="../static/files/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../static/files/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
+
+        .admin-header {
+            background: linear-gradient(135deg, #6a0dad, #9b30d9);
+            padding: 22px 28px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .admin-header h2 { font-weight: 800; margin: 0; font-size: 1.4rem; }
+        .admin-header a.logout {
+            color: #fff;
+            text-decoration: none;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .admin-header a.logout:hover { background: rgba(255,255,255,0.25); }
+
+        .container-main { max-width: 1200px; margin: 28px auto 48px; padding: 0 16px; }
+
+        .summary-cards {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .summary-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 16px 20px;
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+        }
+        .summary-card .num { font-size: 1.6rem; font-weight: 800; color: #6a0dad; }
+        .summary-card .lbl { font-size: 0.8rem; color: #888; font-weight: 600; }
+
+        .filters-bar {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filters-bar form { display: flex; gap: 10px; flex-wrap: wrap; flex: 1; }
+        .filters-bar select, .filters-bar input {
+            border-radius: 8px;
+            border: 1.5px solid #ddd;
+            padding: 8px 12px;
+            font-size: 0.88rem;
+        }
+        .filters-bar button {
+            background: #6a0dad;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+
+        .orders-table-wrap {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        thead th {
+            background: #f9f0ff;
+            color: #6a0dad;
+            font-weight: 700;
+            padding: 12px 14px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        tbody td {
+            padding: 12px 14px;
+            border-top: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        tbody tr:hover { background: #fbf8ff; }
+
+        .badge-status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .badge-Pending { background: #fff4e0; color: #c98a00; }
+        .badge-Processing { background: #e3f0ff; color: #1c6fd0; }
+        .badge-Shipped { background: #eee3ff; color: #6a0dad; }
+        .badge-Delivered { background: #e3fbe9; color: #1f9d4c; }
+        .badge-Cancelled { background: #fdeaea; color: #c0392b; }
+
+        .status-form select {
+            border-radius: 6px;
+            border: 1.5px solid #ddd;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+        }
+        .status-form button {
+            background: #6a0dad;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            margin-left: 4px;
+            font-weight: 600;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h2>📋 Orders Dashboard</h2>
+        <a href="/admin/logout" class="logout">Log out</a>
+    </div>
+
+    <div class="container-main">
+
+        <!-- Summary -->
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="num">{{ orders|length }}</div>
+                <div class="lbl">Showing</div>
+            </div>
+            {% for s in ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'] %}
+            <div class="summary-card">
+                <div class="num">{{ summary.get(s, 0) }}</div>
+                <div class="lbl">{{ s }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-bar">
+            <form method="GET" action="/admin">
+                <select name="status" onchange="this.form.submit()">
+                    {% for s in ['All', 'Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'] %}
+                    <option value="{{ s }}" {% if status_filter == s %}selected{% endif %}>{{ s }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" name="search" placeholder="Search name, phone, product..." value="{{ search }}">
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+
+        <!-- Orders table -->
+        <div class="orders-table-wrap">
+            {% if orders|length == 0 %}
+            <div class="empty-state">No orders found.</div>
+            {% else %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Contact</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Delivery</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for o in orders %}
+                    <tr>
+                        <td>#{{ o[0] }}</td>
+                        <td>{{ o[14] }}</td>
+                        <td>{{ o[5] }}</td>
+                        <td>{{ o[6] }}<br><span style="color:#aaa;">{{ o[7] }}</span></td>
+                        <td>{{ o[2] }} (x{{ o[3] }})</td>
+                        <td>KES {{ o[4] }}</td>
+                        <td>{{ o[8] }}, {{ o[9] }}<br><span style="color:#aaa;">{{ o[10] }}</span></td>
+                        <td>{{ o[12] }}</td>
+                        <td><span class="badge-status badge-{{ o[13] }}">{{ o[13] }}</span></td>
+                        <td>
+                            <form class="status-form" method="POST" action="/admin/orders/{{ o[0] }}/status">
+                                <select name="status">
+                                    {% for s in ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'] %}
+                                    <option value="{{ s }}" {% if o[13] == s %}selected{% endif %}>{{ s }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit">Save</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

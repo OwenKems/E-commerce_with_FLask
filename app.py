@@ -344,6 +344,17 @@ def update_order_status(order_id):
     cursor.execute("UPDATE orders SET status=%s WHERE order_id=%s", (new_status, order_id))
     connection.commit()
     return redirect(url_for('admin_dashboard'))
+@app.route('/my_orders')
+@login_required
+def my_orders():
+    cursor = connection.cursor()
+    cursor.execute("""
+        SELECT * FROM orders 
+        WHERE email = %s 
+        ORDER BY created_at DESC
+    """, (session['email'],))
+    orders = cursor.fetchall()
+    return render_template('my_orders.html', orders=orders)
 
 
 app.run(debug=True)

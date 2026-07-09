@@ -3,6 +3,7 @@ from flask import *
 import os
 import pymysql
 from sms import send_sms
+from flask import redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = "qwer1234tyui"
@@ -15,7 +16,7 @@ with connection.cursor() as setup_cursor:
         CREATE TABLE IF NOT EXISTS orders (
             order_id INT AUTO_INCREMENT PRIMARY KEY,
             product_id INT,
-            product_name VARCHAR(255),
+            product_name VARCHAR(255),   
             quantity INT DEFAULT 1,
             price DECIMAL(10,2),
             full_name VARCHAR(255),
@@ -142,7 +143,7 @@ def signup():
             cursor = connection.cursor()
             cursor.execute(sql, (username, email, phone, password))
             connection.commit()
-            return render_template("signup.html", success="Registration successful")
+            return render_template("signin.html", success="Registration successful: Log In to continue")
     else:
         return render_template("signup.html")
 
@@ -345,6 +346,11 @@ def update_order_status(order_id):
     connection.commit()
     return redirect(url_for('admin_dashboard'))
 @app.route('/my_orders')
+def customer_orders():
+    if 'email' not in session or not session['email']:
+        flash('Please log in to view your orders.')
+        return redirect(url_for('signin'))
+    return my_orders()  
 @login_required
 def my_orders():
     cursor = connection.cursor()

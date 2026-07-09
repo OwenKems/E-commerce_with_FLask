@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+      <link href="../static/files/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../static/files/css/lightslider.css">
+        <link rel="stylesheet" href="../static/files/css/style.css">
+        <script src="../static/files/js/bootstrap.bundle.min.js"></script>
+        <script src="../static/files/js/jquery.js"></script>
+        <script src="../static/files/js/lightslider.js"></script>
+        <script src="../static/files/js/script.js"></script>
+
 </head>
 <body>
     {% include 'navbar.html' %}
@@ -26,9 +34,9 @@
         </thead>
         <tbody>
             {% for o in orders %}
-            <tr>
+            <tr colspan="7">
                 <td>#{{ o[0] }}</td>
-                <td>{{ o[2] }}</td>
+                <td>{{ o[2] }}</td> 
                 <td>KES {{ o[4] }}</td>
                 <td>{{ o[12] }}</td>
                 <td>{{ o[9] }}, {{ o[10] }}</td>
@@ -47,7 +55,7 @@
         </tbody>
     </table>
     {% else %}
-    <p>You have no orders yet. <a href="/">Start shopping</a></p>
+    <p>You have no orders yet. <a href="./home.html">Start shopping</a></p>
     {% endif %}
 </div>
 

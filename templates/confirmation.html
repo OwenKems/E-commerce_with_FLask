@@ -251,7 +251,10 @@
 
             <!-- Action Buttons -->
             <a href="/" class="btn-home">🛍️ Continue Shopping</a>
-            <a href="/" class="btn-orders">📦 View My Orders</a>
+            <!-- <a href="./my_orders.html" class="btn-orders">📦 View My Orders</a> -->
+             <a href="{{ url_for('customer_orders') }}" class="view-orders-btn">
+            📦 View My Orders
+            </a>
 
             <p class="promo-note">
                 A confirmation will be sent to <span>{{ session['email'] if session['email'] else 'your email' }}</span>

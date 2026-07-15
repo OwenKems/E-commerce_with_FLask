@@ -363,4 +363,5 @@ def my_orders():
     return render_template('my_orders.html', orders=orders)
 
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)

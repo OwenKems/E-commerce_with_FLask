@@ -7,8 +7,11 @@ from flask import redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = "qwer1234tyui"
+from waitress import serve
+from app import app
 
-connection = pymysql.connect(host='localhost', user="root", password="", database="Nyati")
+serve(app, host="127.0.0.1", port=5001)
+connection = pymysql.connect(host='localhost', user="soko_app", password="@Kemboiowen63@", database="Nyati")
 
 # Auto-create the orders table if it doesn't exist yet
 with connection.cursor() as setup_cursor:
@@ -50,7 +53,7 @@ ADMIN_PASSWORD = "admin123"
 
 @app.route("/")
 def home():
-    connection = pymysql.connect(host='localhost', user="root", password="", database="Nyati")
+    connection = pymysql.connect(host='localhost', user="soko_app", password="@Kemboiowen63@", database="Nyati")
 
     # SQL queries for each category
     sql_clothes      = "SELECT * FROM products WHERE product_category='clothes'"

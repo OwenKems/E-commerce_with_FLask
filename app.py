@@ -7,10 +7,7 @@ from flask import redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = "qwer1234tyui"
-from waitress import serve
-from app import app
 
-serve(app, host="127.0.0.1", port=5001)
 connection = pymysql.connect(host='localhost', user="soko_app", password="@Kemboiowen63@", database="Nyati")
 
 # Auto-create the orders table if it doesn't exist yet

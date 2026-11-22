@@ -8,8 +8,11 @@ from flask import redirect, url_for
 app = Flask(__name__)
 app.secret_key = "qwer1234tyui"
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> bc9906f30181c61dba9427056916ae0918d69f3d
 connection = pymysql.connect(host='localhost', user="soko_app", password="@Kemboiowen63@", database="Nyati")
 
 # Auto-create the orders table if it doesn't exist yet
